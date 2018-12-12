@@ -3,21 +3,20 @@ package GameData;
 import java.io.IOException;
 
 import org.apache.hadoop.io.DoubleWritable;
-import org.apache.hadoop.io.IntWritable;
 //import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-class ReducerMixData extends Reducer <Text,IntWritable,Text,IntWritable> 
+class ReducerMixData extends Reducer <Text,DoubleWritable,Text,DoubleWritable> 
 {
-	public void reducer(Text key,Iterable<IntWritable> value,Context ctx) throws IOException, InterruptedException 
+	public void reducer(Text key,Iterable<DoubleWritable> value,Context ctx) throws IOException, InterruptedException 
 	{
-		 int max=0;
-			for(IntWritable v:value)
+		 double max=0;
+			for(DoubleWritable v:value)
 			{
 					max=Math.max(max, v.get());
 			}
-			ctx.write(key,new IntWritable(max));
+			ctx.write(new Text(key),new DoubleWritable(max));
 	}
 }
 
